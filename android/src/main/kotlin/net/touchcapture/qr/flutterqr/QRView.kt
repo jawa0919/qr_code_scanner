@@ -216,7 +216,7 @@ class QRView(
                 allowedBarcodeTypes.add(BarcodeFormat.values()[it])
             }
         } catch (e: java.lang.Exception) {
-            result.error(null, null, null)
+            result.error(e.message ?: "startScan.catch", null, null)
         }
 
         barcodeView?.decodeContinuous(object : BarcodeCallback {
@@ -251,7 +251,7 @@ class QRView(
                 )
             )
         } catch (e: Exception) {
-            result.error(null, null, null)
+            result.error(e.message ?: "getSystemFeatures.catch", null, null)
         }
     }
 
@@ -313,7 +313,7 @@ class QRView(
     }
 
     override fun onRequestPermissionsResult(
-        requestCode: Int, permissions: Array<out String>?, grantResults: IntArray
+        requestCode: Int, permissions: Array<out String>, grantResults: IntArray
     ): Boolean {
         if (requestCode == Shared.CAMERA_REQUEST_ID + this.id) {
             return if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
